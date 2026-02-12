@@ -11,6 +11,8 @@
     <meta property="og:title" content="A Special Surprise ❤️">
     <meta property="og:description" content="Mubashir has automated something special for you! 💍🚀">
     <meta property="og:image" content="https://muahshi.github.io/Valentine/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://muahshi.github.io/Valentine/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
@@ -32,6 +34,7 @@
         
         #flashOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; z-index: 9999; }
         
+        /* The Bag/Box Style Card */
         .card { 
             background: #fff0f3; 
             padding: 2rem; 
@@ -67,7 +70,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
         }
         #yesBtn { background: var(--deep-pink); color: white; border: 2px solid var(--gold); z-index: 10; transform: translateX(-55px); }
-        #noBtn { background: #adb5bd; color: white; position: absolute; transform: translateX(55px); }
+        #noBtn { background: #adb5bd; color: white; position: absolute; transform: translateX(55px); transition: 0.1s; }
 
         .hidden { display: none; }
         .valentine-wish { font-size: 2.5rem; color: var(--deep-pink); font-family: 'Great Vibes', cursive; margin-bottom: 15px; }
@@ -129,7 +132,7 @@
             const interval = setInterval(() => {
                 progress += 2;
                 fill.style.width = progress + "%";
-                if(progress % 25 == 0) status.innerText = loadingMsgs[Math.floor(progress/26)] || "Almost there...";
+                if(progress % 25 == 0) status.innerText = loadingMsgs[Math.floor(progress/26)] || "Done!";
                 if (progress >= 100) { clearInterval(interval); setTimeout(showSuccess, 500); }
             }, 50);
         }
@@ -152,8 +155,8 @@
 
         function dodge() {
             const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 50);
             noBtn.style.position = "fixed";
             noBtn.style.left = x + "px";
             noBtn.style.top = y + "px";
