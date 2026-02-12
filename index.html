@@ -3,117 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>A Special Surprise for You ❤️</title>
-    <meta name="title" content="A Special Surprise for You ❤️">
-    <meta name="description" content="Mubashir has a special message for you. Open to see the magic!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://muahshi.github.io/Valentine/">
-    <meta property="og:title" content="A Special Surprise for You ❤️">
-    <meta property="og:description" content="Checking our compatibility... 100% Match Found!">
-    <meta property="og:image" content="og-image.jpg"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>A Special Surprise ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --p: #ff4d6d; --dr: #800f2f; --g: rgba(255, 255, 255, 0.9); }
+        :root { --p: #ff4d6d; --dr: #800f2f; --glass: rgba(255, 255, 255, 0.95); }
         body { margin: 0; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #ffb3c1 0%, #fae1dd 100%); font-family: 'Poppins', sans-serif; overflow: hidden; position: relative; }
         
-        .hearts-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .floating-element { position: absolute; animation: move linear infinite; pointer-events: none; }
-        .heart { color: rgba(255, 77, 109, 0.5); }
-        .name-float { color: rgba(128, 15, 47, 0.3); font-size: 0.9rem; font-weight: bold; font-family: 'Great Vibes', cursive; }
-
-        @keyframes move { 0% { transform: translateY(110vh) scale(0.5); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-
-        .card { background: var(--g); backdrop-filter: blur(10px); padding: 2rem; border-radius: 30px; box-shadow: 0 20px 50px rgba(255, 75, 110, 0.2); text-align: center; z-index: 10; width: 85%; max-width: 400px; border: 2px solid white; }
-        .calc-container { background: linear-gradient(135deg, #ff4d6d, #ff758f); padding: 20px; border-radius: 20px; margin-bottom: 20px; color: white; }
-        .calc-percent { font-size: 2.8rem; font-weight: bold; }
-        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.3); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: white; transition: width 0.1s linear; }
-
-        h1 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--dr); margin: 10px 0; }
-        .btn-container { margin-top: 25px; display: flex; justify-content: center; gap: 15px; min-height: 50px; position: relative; }
-        button { padding: 12px 30px; font-size: 1.1rem; border: none; border-radius: 15px; cursor: pointer; font-weight: 600; touch-action: manipulation; }
-        #yesBtn { background: var(--p); color: white; z-index: 100; }
-        #noBtn { background: #8d99ae; color: white; position: relative; z-index: 99; }
+        /* High-Intensity Flash Overlay */
+        #flashOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; z-index: 9999; }
         
-        .hidden { display: none; }
-        #loveLanguagesContainer { height: 180px; display: flex; justify-content: center; align-items: center; position: relative; background: #1a1a1a; border-radius: 20px; overflow: hidden; margin-bottom: 15px; }
-        .love-word { position: absolute; color: #ff4d6d; font-weight: bold; animation: floatFade 4s infinite; }
-        @keyframes floatFade { 0% { transform: scale(0.5); opacity: 0; } 50% { opacity: 1; } 100% { transform: scale(1.3) translate(var(--tx), var(--ty)); opacity: 0; } }
+        .card { 
+            background: var(--glass); backdrop-filter: blur(15px); padding: 2.5rem 1.5rem; 
+            border-radius: 40px; box-shadow: 0 25px 60px rgba(255, 75, 110, 0.3); 
+            text-align: center; z-index: 10; width: 88%; max-width: 480px; 
+            border: 3px solid white; min-height: 520px; display: flex; flex-direction: column; justify-content: center;
+        }
 
-        #secretLetter { position: fixed; bottom: 20px; right: 20px; font-size: 2rem; cursor: pointer; z-index: 1000; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .calc-container { background: linear-gradient(135deg, #ff4d6d, #ff758f); padding: 20px; border-radius: 25px; margin-bottom: 20px; color: white; }
+        .calc-percent { font-size: 2.8rem; font-weight: bold; font-family: 'monospace'; }
+
+        h1 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--dr); margin: 10px 0; }
+        .proposal-text { color: #590d22; font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
+
+        .btn-container { margin-top: 20px; position: relative; height: 120px; width: 100%; display: flex; justify-content: center; align-items: center; }
+        button { padding: 15px 35px; font-size: 1.2rem; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        #yesBtn { background: var(--p); color: white; z-index: 100; position: relative; transform: translateX(-60px); }
+        #noBtn { background: #8d99ae; color: white; position: absolute; z-index: 99; transform: translateX(60px); transition: all 0.2s ease-out; }
+
+        .hidden { display: none; }
+        .valentine-wish { font-size: 2.2rem; color: var(--p); font-family: 'Great Vibes', cursive; margin-bottom: 10px; font-weight: bold; }
+        
+        /* Purana Romantic Matter */
+        .bollywood-msg { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--dr); border-top: 2px dashed var(--p); padding-top: 15px; line-height: 1.4; }
+        
+        .footer-tag { margin-top: 20px; font-weight: 600; color: var(--p); font-size: 0.9rem; }
     </style>
 </head>
-<body>
-    <div class="hearts-bg" id="heartsBg"></div>
-    <div class="card" id="mainCard">
+<body onclick="initAudio()">
+    <div id="flashOverlay"></div>
+    <audio id="shutterSound" src="https://www.soundjay.com/mechanical/camera-shutter-click-01.mp3" preload="auto"></audio>
+
+    <div class="card">
         <div id="proposalContent">
             <div class="calc-container">
-                <div style="font-size:0.7rem;">SYSTEM SCANNING...</div>
+                <div style="font-size:0.8rem; letter-spacing:2px; font-weight:600;">COMPATIBILITY SCANNER</div>
                 <div class="calc-percent" id="percent">0%</div>
-                <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
             </div>
             <h1>Dear Love, ❤️</h1>
-            <p>Main AI Automation Expert hoon, par tere liye dil humesha "Manual Mode" pe rehta hai. <b>Will you marry me?</b></p>
-            <div class="btn-container">
+            <p class="proposal-text">Maine poori duniya ki workflows automate kar li, par mera dil sirf tumhare liye <b>"Manual Mode"</b> pe dhadakta hai.</p>
+            <div class="btn-container" id="btnWrapper">
                 <button id="yesBtn" onclick="showSuccess()">YES!</button>
                 <button id="noBtn" onmouseover="dodge()" onclick="dodge()" ontouchstart="dodge()">NO</button>
             </div>
         </div>
+
         <div id="successContent" class="hidden">
-            <div id="loveLanguagesContainer"></div>
-            <p style="color:var(--p); font-weight:bold;">"Hehe! Blacklist bypass nahi ho sakta baby!" 💍✨</p>
-            <p>Database updated by <b>Mubashir</b>. <br> Jaldi se screenshot lo! 😍🚀</p>
+            <div class="valentine-wish">Happy Valentine's Day Love ❤️</div>
+            <div class="bollywood-msg">
+                "Tumhare bina mera system crash ho jata hai... Jaise Bollywood ki filmon mein heroine ke bina hero adhoora hota hai, waise hi meri life ki automation tumhare bina error dikhati hai. I love you!"
+            </div>
+            <p class="footer-tag">
+                Database updated by <b>Mubashir</b>.<br>Screenshot lo aur share karo! 💍🚀
+            </p>
         </div>
     </div>
 
-    <div id="secretLetter" class="hidden" onclick="alert('Mubashir ka Message: \n\nTum sirf meri partner nahi, meri poori duniya ka sabse haseen workflow ho. ❤️')">💌</div>
-
     <script>
-        function createFloating() {
-            const el = document.createElement('div');
-            el.className = 'floating-element';
-            if (Math.random() > 0.4) { el.innerHTML = '❤️'; el.classList.add('heart'); } 
-            else { el.innerHTML = 'Mubashir💋'; el.classList.add('name-float'); }
-            el.style.left = Math.random() * 100 + 'vw';
-            el.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            el.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            document.getElementById('heartsBg').appendChild(el);
-            setTimeout(() => el.remove(), 5000);
+        // Audio Initialization Trick
+        function initAudio() {
+            document.getElementById('shutterSound').play().then(() => {
+                document.getElementById('shutterSound').pause();
+                document.getElementById('shutterSound').currentTime = 0;
+            }).catch(() => {});
         }
-        setInterval(createFloating, 400);
+
+        function triggerFlash() {
+            const flash = document.getElementById('flashOverlay');
+            const sound = document.getElementById('shutterSound');
+            
+            sound.play(); // Shutter Sound
+            
+            // Multiple Flashes
+            let flashes = 0;
+            const interval = setInterval(() => {
+                flash.style.opacity = '1';
+                setTimeout(() => { flash.style.opacity = '0'; }, 50);
+                flashes++;
+                if (flashes > 3) clearInterval(interval);
+            }, 150);
+        }
 
         let count = 0;
         const calcInt = setInterval(() => {
-            if(count < 100) { count++; document.getElementById('percent').innerText = count + "%"; document.getElementById('fill').style.width = count + "%"; } 
+            if(count < 100) { count++; document.getElementById('percent').innerText = count + "%"; } 
             else { document.getElementById('percent').innerText = "100% PERFECT"; clearInterval(calcInt); }
-        }, 60);
+        }, 50);
 
         function dodge() {
-            const btn = document.getElementById('noBtn');
-            btn.style.position = 'fixed';
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-        }
-
-        const langs = ["I Love You", "Te Amo", "Je t'aime", "मैं तुमसे प्यार करता हूँ", "Saranghae", "Aishiteru", "Ti amo"];
-        function spawnLove() {
-            const container = document.getElementById('loveLanguagesContainer');
-            const span = document.createElement('span');
-            span.className = 'love-word';
-            span.innerText = langs[Math.floor(Math.random() * langs.length)];
-            span.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
-            span.style.setProperty('--ty', (Math.random() * 200 - 100) + 'px');
-            container.appendChild(span);
-            setTimeout(() => span.remove(), 4000);
+            const noBtn = document.getElementById('noBtn');
+            const wrapper = document.getElementById('btnWrapper');
+            const rect = wrapper.getBoundingClientRect();
+            const newX = Math.random() * (rect.width - noBtn.offsetWidth);
+            const newY = Math.random() * (rect.height - noBtn.offsetHeight);
+            noBtn.style.transform = 'none';
+            noBtn.style.left = newX + "px";
+            noBtn.style.top = newY + "px";
+            if (navigator.vibrate) navigator.vibrate(50);
         }
 
         function showSuccess() {
+            triggerFlash();
+            confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
             document.getElementById('proposalContent').classList.add('hidden');
             document.getElementById('successContent').classList.remove('hidden');
-            document.getElementById('secretLetter').classList.remove('hidden');
-            document.body.style.background = "linear-gradient(to bottom, #ff4d6d, #800f2f)";
-            setInterval(spawnLove, 400);
+            document.body.style.background = "#ff4d6d";
         }
     </script>
 </body>
