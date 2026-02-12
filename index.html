@@ -3,9 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>A Special Surprise ❤️</title>
+    <meta name="title" content="A Special Surprise ❤️">
+    <meta name="description" content="Mubashir has a special automated message for you. Open to reveal!">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://muahshi.github.io/Valentine/">
+    <meta property="og:title" content="A Special Surprise ❤️">
+    <meta property="og:description" content="Mubashir has automated something special for you! 💍🚀">
+    <meta property="og:image" content="https://muahshi.github.io/Valentine/og-image.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://muahshi.github.io/Valentine/">
+    <meta property="twitter:title" content="A Special Surprise ❤️">
+    <meta property="twitter:description" content="Mubashir has automated something special for you! 💍🚀">
+    <meta property="twitter:image" content="https://muahshi.github.io/Valentine/og-image.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
         :root { --p: #ff4d6d; --dr: #800f2f; --glass: rgba(255, 255, 255, 0.95); }
         body { margin: 0; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #ffb3c1 0%, #fae1dd 100%); font-family: 'Poppins', sans-serif; overflow: hidden; position: relative; }
@@ -23,7 +40,7 @@
         .calc-percent { font-size: 2.8rem; font-weight: bold; font-family: 'monospace'; }
 
         /* Loading Screen Styles */
-        #lifeLoading { text-align: left; font-family: 'monospace'; font-size: 0.9rem; color: #dr; padding: 10px; }
+        #lifeLoading { text-align: left; font-family: 'monospace'; font-size: 0.9rem; color: var(--dr); padding: 10px; }
         .loader-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin: 15px 0; }
         .loader-fill { width: 0%; height: 100%; background: var(--p); transition: width 0.3s; }
         .status-text { color: var(--p); font-weight: bold; height: 20px; }
@@ -143,7 +160,6 @@
             document.body.style.background = "#ff4d6d";
         }
 
-        // Keep existing dodge and calc logic
         let count = 0;
         const calcInt = setInterval(() => {
             if(count < 100) { count++; document.getElementById('percent').innerText = count + "%"; } 
@@ -161,3 +177,4 @@
     </script>
 </body>
 </html>
+
