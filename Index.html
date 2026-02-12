@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mubashir's Love Systems 🚀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --dark-red: #800f2f;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ffb3c1 0%, #fae1dd 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Elements BG */
+        .hearts-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            animation: move linear infinite;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .heart { color: rgba(255, 77, 109, 0.5); }
+        .name-float { 
+            color: rgba(128, 15, 47, 0.3); 
+            font-size: 0.8rem; 
+            font-weight: bold;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Main Card */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 75, 110, 0.2);
+            text-align: center;
+            z-index: 10;
+            width: 85%;
+            max-width: 400px;
+            border: 2px solid white;
+        }
+
+        .calc-container {
+            background: linear-gradient(135deg, #ff4d6d, #ff758f);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .calc-percent { font-size: 2.8rem; font-weight: bold; margin: 5px 0; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.3); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: white; transition: width 0.1s linear; }
+
+        h1 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--dark-red); margin: 10px 0; }
+        p { color: #590d22; font-size: 1rem; line-height: 1.4; }
+
+        .btn-container { margin-top: 25px; display: flex; justify-content: center; gap: 15px; min-height: 50px; position: relative; }
+        button { padding: 12px 30px; font-size: 1.1rem; border: none; border-radius: 15px; cursor: pointer; font-weight: 600; transition: all 0.2s; touch-action: manipulation; }
+        #yesBtn { background: var(--primary-pink); color: white; z-index: 100; }
+        #noBtn { background: #8d99ae; color: white; position: relative; z-index: 99; }
+
+        .hidden { display: none; }
+        #loveLanguagesContainer { height: 180px; display: flex; justify-content: center; align-items: center; position: relative; background: #1a1a1a; border-radius: 20px; overflow: hidden; margin-bottom: 15px; }
+        .love-word { position: absolute; color: #ff4d6d; font-weight: bold; animation: floatFade 4s infinite; }
+
+        @keyframes floatFade {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.3) translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="card" id="mainCard">
+        <div id="proposalContent">
+            <div class="calc-container">
+                <div style="font-size:0.8rem; letter-spacing:1px;">SCANNING OUR SOULS...</div>
+                <div class="calc-percent" id="percent">0%</div>
+                <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+            </div>
+            <h1>Dear Love, ❤️</h1>
+            <p>Main AI Workflows toh automate kar leta hoon, par mera dil sirf tumhare liye <b>"Manual Mode"</b> pe dhadakta hai.</p>
+            <p><strong>Will you marry me?</strong></p>
+            <div class="btn-container">
+                <button id="yesBtn" onclick="showSuccess()">YES!</button>
+                <button id="noBtn" onmouseover="dodge()" onclick="dodge()" ontouchstart="dodge()">NO</button>
+            </div>
+        </div>
+
+        <div id="successContent" class="hidden">
+            <div id="loveLanguagesContainer"></div>
+            <p style="color:var(--primary-pink); font-weight:bold; font-size:1.1rem;">"Hehe! Maine 'No' button blacklist kar diya tha! Ab tum hamesha ke liye meri ho gayi ho." 💍✨</p>
+            <p style="font-size:0.9rem;">Database successfully updated by <b>Mubashir</b>. <br> Jaldi se screenshot lo aur share karo! 😍🚀</p>
+        </div>
+    </div>
+
+    <script>
+        const bg = document.getElementById('heartsBg');
+        
+        // Logic to float hearts AND your name
+        function createFloatingElement() {
+            const el = document.createElement('div');
+            el.className = 'floating-element';
+            
+            // 70% hearts, 30% your name
+            if (Math.random() > 0.3) {
+                el.innerHTML = '❤️';
+                el.classList.add('heart');
+            } else {
+                el.innerHTML = 'Mubashir💋';
+                el.classList.add('name-float');
+            }
+
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            el.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            bg.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }
+        setInterval(createFloatingElement, 400);
+
+        // Calculator Logic
+        let count = 0;
+        const calcInt = setInterval(() => {
+            if(count < 100) {
+                count++;
+                document.getElementById('percent').innerText = count + "%";
+                document.getElementById('fill').style.width = count + "%";
+            } else {
+                document.getElementById('percent').innerText = "100% PERFECT";
+                document.getElementById('percent').style.fontSize = "1.5rem";
+                clearInterval(calcInt);
+            }
+        }, 60);
+
+        // Dodge Logic
+        function dodge() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // Success Logic
+        const languages = ["I Love You", "Te Amo", "Je t'aime", "Ich liebe dich", "मैं तुमसे प्यार करता हूँ", "Saranghae", "Aishiteru", "Ti amo"];
+        function spawnLove() {
+            const container = document.getElementById('loveLanguagesContainer');
+            const span = document.createElement('span');
+            span.className = 'love-word';
+            span.innerText = languages[Math.floor(Math.random() * languages.length)];
+            span.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+            span.style.setProperty('--ty', (Math.random() * 200 - 100) + 'px');
+            container.appendChild(span);
+            setTimeout(() => span.remove(), 4000);
+        }
+
+        function showSuccess() {
+            document.getElementById('proposalContent').classList.add('hidden');
+            document.getElementById('successContent').classList.remove('hidden');
+            document.body.style.background = "linear-gradient(to bottom, #ff4d6d, #800f2f)";
+            setInterval(spawnLove, 400);
+        }
+    </script>
+</body>
+</html>
