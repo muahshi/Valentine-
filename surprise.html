@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Samira ❤️ Mubashir | The Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --p: #ff0a54; --g: #ffbd00; --bg: #1a000e; }
+        body { margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; background: var(--bg); font-family: 'Poppins', sans-serif; overflow: hidden; color: white; }
+        
+        /* Floating Elements */
+        #floating-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .fly-item { position: absolute; white-space: nowrap; font-family: 'Dancing Script', cursive; opacity: 0.4; animation: fly linear infinite; color: #ffccd5; }
+        @keyframes fly { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
+
+        /* Card System */
+        .card { 
+            background: rgba(255, 255, 255, 0.07); padding: 35px 25px; border-radius: 40px; 
+            box-shadow: 0 0 50px rgba(255, 10, 84, 0.3); text-align: center; width: 85%; max-width: 420px; 
+            border: 1px solid rgba(255, 189, 0, 0.3); backdrop-filter: blur(15px); z-index: 10; position: relative;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
+        .day-node { padding: 10px 5px; background: rgba(0,0,0,0.3); border-radius: 12px; font-size: 0.7rem; border: 1px solid #444; cursor: pointer; transition: 0.3s; }
+        .day-node.active { border-color: var(--p); background: rgba(255, 10, 84, 0.2); box-shadow: 0 0 10px var(--p); }
+        .day-node.locked { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); }
+
+        h1 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--g); margin: 0; }
+        .box { background: rgba(0,0,0,0.4); border-radius: 20px; padding: 20px; margin: 15px 0; border-left: 5px solid var(--p); line-height: 1.5; }
+        
+        .btn-box { height: 110px; position: relative; display: flex; justify-content: center; align-items: center; gap: 15px; }
+        button { padding: 12px 28px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        #mainBtn { background: var(--p); color: white; box-shadow: 0 0 20px var(--p); z-index: 20; }
+        #noBtn { background: transparent; border: 1px solid white; color: white; position: absolute; }
+        
+        .hidden { display: none !important; }
+        .loading-bar { width: 100%; background: #333; height: 8px; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        #fill { width: 0%; height: 100%; background: linear-gradient(to right, var(--p), var(--g)); }
+        #flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; z-index: 9999; pointer-events: none; }
+    </style>
+</head>
+<body onclick="startAudio()">
+
+    <div id="flash"></div>
+    <div id="floating-container"></div>
+    <audio id="music" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+
+    <div class="card">
+        <div id="calendar-ui">
+            <h1>Samira's Journey 🌹</h1>
+            <p style="font-size: 0.7rem; letter-spacing: 2px; color: #ffccd5;">8 DAYS OF CODE & LOVE</p>
+            <div class="grid" id="dayGrid"></div>
+            <div class="box" id="dayMessage">Select an active day to unlock... ✨</div>
+            <div id="dayAction"></div>
+        </div>
+
+        <div id="propose-ui" class="hidden">
+            <h1>Samira 🌹</h1>
+            <div style="font-size: 0.7rem; letter-spacing: 3px; color: #ffccd5;">MUBASHIR'S UNIVERSE</div>
+            <div class="box">
+                <p id="txt">"Maine hazaron lines of code likhe, par Samira, tumhari muskurahat mere dil ka sabse perfect algorithm hai." ✨</p>
+            </div>
+            <div class="btn-box">
+                <button id="mainBtn" onclick="nextStep()">Qubool Hai ❤️</button>
+                <button id="noBtn" onmouseover="dodge()">No</button>
+            </div>
+        </div>
+
+        <div id="loader" class="hidden">
+            <h2 style="font-family: 'Great Vibes'; font-size: 2.5rem; color: var(--g);">Writing Destiny...</h2>
+            <p id="lMsg" style="font-size: 0.8rem; color: #ffccd5;">Syncing 7 Janams...</p>
+            <div class="loading-bar"><div id="fill"></div></div>
+        </div>
+
+        <div id="final" class="hidden">
+            <h1 style="font-size: 2.5rem;">Locked Forever! 💍</h1>
+            <div class="box" style="border-left:none; border-bottom:2px solid var(--g);">
+                <p style="font-family: 'Dancing Script', cursive; font-size: 1.3rem;">"Samira & Mubashir: Ek aisi automation jisme sirf sukoon aur pyar hai." 🧿✨</p>
+            </div>
+            <div style="font-size: 2.5rem; margin-top: 15px;">👰🏻‍♀️ 🫂 🤵🏻‍♂️ ❤️ 👑</div>
+            <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">DATABASE UPDATED SUCCESSFULLY ✅</p>
+        </div>
+    </div>
+
+    <script>
+        const vDays = [
+            { d: 7, n: "Rose Day", msg: "Har rose murjha sakta hai, par hamari digital memory hamesha fresh rahegi. 🌹", b: "Aww! 💖" },
+            { d: 8, n: "Propose Day", msg: "Main system architect hoon, par mera system sirf tumhare liye optimize hota hai. 💍", b: "Sweet! ✨" },
+            { d: 9, n: "Chocolate Day", msg: "Chocolate se zyada mithas tumhare voice notes mein hai. 🍫", b: "Hehe! 🍫" },
+            { d: 10, n: "Teddy Day", msg: "Jab main paas na hoon, ye virtual teddy tumhara khayal rakhega. 🧸", b: "Huggy! 🧸" },
+            { d: 11, n: "Promise Day", msg: "I promise, hamari bonding mein kabhi koi bug nahi aane dunga. 🤝", b: "Promise! 🤝" },
+            { d: 12, n: "Hug Day", msg: "Digital connection 0ms latency par hai. Sending you a tight hug! 🫂", b: "Received! 🫂" },
+            { d: 13, n: "Kiss Day", msg: "Sending virtual packets of love... Delivered to your heart. 😘", b: "Mwah! 😘" },
+            { d: 14, n: "V-Day", msg: "FINAL STAGE: The Ultimate Connection. Ready?", b: "UNLOCK FOREVER ❤️" }
+        ];
+
+        let step = 1;
+        // TEST KARNE KE LIYE: Yahan 'new Date().getDate()' ki jagah 14 likh kar check kar sakte ho.
+        const today = new Date().getDate();
+
+        function init() {
+            const grid = document.getElementById('dayGrid');
+            vDays.forEach((day, i) => {
+                const node = document.createElement('div');
+                node.className = `day-node ${today >= day.d ? 'active' : 'locked'}`;
+                node.innerHTML = `Day ${i+1}<br>${day.d} Feb`;
+                if(today >= day.d) node.onclick = () => loadDay(i);
+                grid.appendChild(node);
+            });
+            createFlyItems();
+        }
+
+        function loadDay(i) {
+            const day = vDays[i];
+            if(day.d === 14 && today >= 14) {
+                document.getElementById('calendar-ui').classList.add('hidden');
+                document.getElementById('propose-ui').classList.remove('hidden');
+            } else {
+                document.getElementById('dayMessage').innerText = day.msg;
+                document.getElementById('dayAction').innerHTML = `<button id="mainBtn" onclick="confettiBlast()">${day.b}</button>`;
+            }
+        }
+
+        function nextStep() {
+            if(step === 1) {
+                step = 2;
+                document.getElementById('txt').innerHTML = "<b>Soul-Scanner Result:</b> 100% Pure Love Found. ✅<br><br>Samira, kya tum Mubashir ki life ki permanent 'Admin' banna pasand karogi? 💍";
+                document.getElementById('mainBtn').innerText = "YES, I DO! 💖";
+            } else {
+                document.getElementById('propose-ui').classList.add('hidden');
+                document.getElementById('loader').classList.remove('hidden');
+                let w = 0;
+                const msgs = ["Optimizing Future... 🚀", "Removing Sadness... ❌", "Securing Forever... 🔒", "Almost Done... ✨"];
+                const iv = setInterval(() => {
+                    w += 2; document.getElementById('fill').style.width = w + "%";
+                    if(w%25==0) document.getElementById('lMsg').innerText = msgs[w/25-1];
+                    if(w>=100) { clearInterval(iv); showFinal(); }
+                }, 600/10); 
+            }
+        }
+
+        function showFinal() {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('final').classList.remove('hidden');
+            document.getElementById('flash').style.opacity = '1';
+            setTimeout(() => document.getElementById('flash').style.opacity = '0', 200);
+            confetti({ particleCount: 400, spread: 100, origin: { y: 0.6 }, colors: ['#ff0a54', '#ffbd00', '#ffffff'] });
+        }
+
+        function dodge() {
+            const b = document.getElementById('noBtn');
+            b.style.position = 'fixed';
+            b.style.left = Math.random() * 80 + "%";
+            b.style.top = Math.random() * 80 + "%";
+            if(navigator.vibrate) navigator.vibrate(50);
+        }
+
+        function createFlyItems() {
+            const items = ["❤️", "🌹", "🧸", "🫂", "💍", "🧿", "✨", "💖"];
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.className = 'fly-item';
+                div.innerText = items[Math.floor(Math.random()*items.length)];
+                div.style.left = Math.random() * 100 + "vw";
+                div.style.fontSize = (Math.random()*10+15)+"px";
+                div.style.animationDuration = (Math.random()*5+7)+"s";
+                document.getElementById('floating-container').appendChild(div);
+                setTimeout(() => div.remove(), 10000);
+            }, 600);
+        }
+
+        function confettiBlast() { confetti({ particleCount: 150, spread: 70 }); }
+        function startAudio() { document.getElementById('music').play().catch(()=>{}); }
+
+        init();
+    </script>
+</body>
+</html>
+
