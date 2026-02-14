@@ -3,61 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Samira ❤️ | Love Nwantiti</title>
+    <title>For Samira ❤️</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     
     <style>
         :root { --p: #ff4d6d; --g: #ffbd00; --bg: #0f0008; }
         body { margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; background: var(--bg); font-family: 'Poppins', sans-serif; overflow: hidden; color: white; }
-
-        /* Floating Background Layer */
         #bg-elements { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .fly { position: absolute; font-family: 'Dancing Script', cursive; opacity: 0.5; animation: flyUp linear infinite; color: #ffccd5; text-shadow: 0 0 10px var(--p); }
+        .fly { position: absolute; font-family: 'Dancing Script', cursive; opacity: 0.5; animation: flyUp linear infinite; color: #ffccd5; }
         @keyframes flyUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
-
-        /* Main Card */
-        .card { 
-            background: rgba(255, 255, 255, 0.05); 
-            padding: 40px 25px; border-radius: 35px; 
-            box-shadow: 0 0 60px rgba(255, 77, 109, 0.2); 
-            text-align: center; width: 88%; max-width: 400px; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(25px); z-index: 10; position: relative;
-        }
-
-        h1 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--g); margin: 0; text-shadow: 0 0 20px var(--g); }
-        .msg-area { min-height: 120px; display: flex; align-items: center; justify-content: center; margin: 20px 0; font-size: 1.15rem; line-height: 1.5; transition: 0.5s; }
-        
-        .btn-box { height: 100px; position: relative; display: flex; justify-content: center; align-items: center; gap: 15px; }
-        button { padding: 15px 35px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        #yesBtn { background: var(--p); color: white; box-shadow: 0 0 25px var(--p); z-index: 20; }
+        .card { background: rgba(255, 255, 255, 0.05); padding: 40px 25px; border-radius: 35px; text-align: center; width: 88%; max-width: 400px; backdrop-filter: blur(25px); z-index: 10; position: relative; border: 1px solid rgba(255, 255, 255, 0.1); }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--g); margin: 0; }
+        .msg-area { min-height: 120px; display: flex; align-items: center; justify-content: center; margin: 20px 0; font-size: 1.15rem; }
+        button { padding: 15px 35px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        #yesBtn { background: var(--p); color: white; box-shadow: 0 0 25px var(--p); }
         #noBtn { background: transparent; border: 1px solid white; color: white; position: absolute; opacity: 0.6; }
-
         .hidden { display: none; }
-        .p-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 20px; overflow: hidden; }
-        #fill { width: 0%; height: 100%; background: var(--g); box-shadow: 0 0 10px var(--g); transition: 0.5s; }
+        #yt-player { position: absolute; top: -500px; left: -500px; visibility: hidden; }
     </style>
 </head>
 <body>
 
     <div id="bg-elements"></div>
-    
-    <audio id="audio">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio>
+    <div id="yt-player"></div>
 
     <div class="card">
         <div id="quiz">
             <h1>Samira ❤️</h1>
-            <div class="p-bar"><div id="fill"></div></div>
-            
-            <div class="msg-area">
-                <p id="txtText">"Ek chhota sa surprise hai... Kya hum start karein?" 🎁</p>
-            </div>
-
-            <div class="btn-box">
+            <div class="msg-area"><p id="txtText">"Ready for a cinematic surprise?" 🎁</p></div>
+            <div style="height: 100px; position: relative; display: flex; justify-content: center; align-items: center;">
                 <button id="yesBtn" onclick="nextStep()">Haan, Start Karo! ❤️</button>
                 <button id="noBtn" onmouseover="dodge()">Nahi</button>
             </div>
@@ -65,44 +42,44 @@
 
         <div id="final" class="hidden">
             <h1 style="font-size: 3rem;">Tu Hi Hai! ❤️</h1>
-            <p style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #ffccd5; margin-top: 20px;">
-                "Mubashir Loves Samira"
-            </p>
-            <div style="font-size: 3.5rem; margin-top: 20px;">🧿 🫂 👰🏻‍♀️ 🤵🏻‍♂️ 💍</div>
-            <p style="font-size: 0.7rem; opacity: 0.6; margin-top: 15px;">Database Updated: Syced Forever ✅</p>
+            <p style="font-family: 'Dancing Script', cursive; font-size: 1.6rem;">Mubashir Loves Samira</p>
+            <div style="font-size: 3.5rem;">🧿 🫂 💍 👰🏻‍♀️</div>
         </div>
     </div>
 
     <script>
+        let player;
         let step = 0;
-        const song = document.getElementById('audio');
-        const txt = document.getElementById('txtText');
-        const bar = document.getElementById('fill');
-        const yBtn = document.getElementById('yesBtn');
-
         const scenarios = [
-            { t: "Kya tum janti ho, tum meri life ki sabse pyaari discovery ho? ✨", b: "Sacchi? 🥰", p: "33%" },
-            { t: "Har sawal ka jawab tum ho, aur har khushi ki wajah tum. Saath rahogi na?", b: "Hamesha ❤️", p: "66%" },
-            { t: "35 Seconds of Magic... Samira, will you be my Forever Valentine? 💍", b: "QUBOOL HAI! 💖", p: "100%" }
+            { t: "Kya tum janti ho, tum meri life ki sabse pyaari discovery ho? ✨", b: "Sacchi? 🥰" },
+            { t: "Har sawal ka jawab tum ho. Saath rahogi na?", b: "Hamesha ❤️" },
+            { t: "My baby, my valentine... Will you be mine forever? 💍", b: "QUBOOL HAI! 💖" }
         ];
 
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0', width: '0',
+                videoId: 'FQQGgYNPDyc', // Your Shorts Video ID
+                events: { 'onReady': onPlayerReady }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready but won't play until first click
+        }
+
         function nextStep() {
-            // Button click hone par music shuru
-            if (song.paused) {
-                song.currentTime = 35; // My baby, my valentine part start
-                song.play().catch(e => console.log("Play error", e));
+            // Play audio from 35s mark on first click
+            if (player && player.playVideo) {
+                player.seekTo(35); 
+                player.playVideo();
                 startFloating();
             }
 
             if(step < scenarios.length) {
-                txt.style.opacity = 0;
-                setTimeout(() => {
-                    txt.innerHTML = scenarios[step].t;
-                    yBtn.innerText = scenarios[step].b;
-                    bar.style.width = scenarios[step].p;
-                    txt.style.opacity = 1;
-                    step++;
-                }, 300);
+                document.getElementById('txtText').innerHTML = scenarios[step].t;
+                document.getElementById('yesBtn').innerText = scenarios[step].b;
+                step++;
             } else {
                 showFinal();
             }
@@ -112,19 +89,18 @@
             document.getElementById('quiz').classList.add('hidden');
             document.getElementById('final').classList.remove('hidden');
             confetti({ particleCount: 400, spread: 100, origin: { y: 0.6 } });
-            if(navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
         }
 
         function dodge() {
             const b = document.getElementById('noBtn');
             b.style.left = Math.random() * 80 + '%';
             b.style.top = Math.random() * 80 + '%';
-            if(navigator.vibrate) navigator.vibrate(80);
         }
 
         function startFloating() {
             const container = document.getElementById('bg-elements');
-            const items = ["Mubashir ❤️ Samira", "🌹", "🧸", "🫂", "💍", "🧿", "✨"];
+            const items = ["Mubashir ❤️ Samira", "🌹", "🧸", "🧿"];
+            if(container.children.length > 0) return;
             setInterval(() => {
                 const div = document.createElement('div');
                 div.className = 'fly';
